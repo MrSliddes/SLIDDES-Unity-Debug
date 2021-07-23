@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "displayName": "SLIDDES Debug",
   "description": "SLIDDES debugging for Unity\nContains:\nDebug Console - for debugging in build / editor",
-  "unity": "2020.1",
-  "unityRelease": "0b5",
   "keywords": [
     "sliddes",
     "mrsliddes",
