@@ -1,0 +1,22 @@
+{
+  "name": "com.sliddes.debug",
+  "version": "1.0.0",
+  "displayName": "SLIDDES Debug",
+  "description": "SLIDDES debugging for Unity\nContains:\nDebug Console - for debugging in build / editor",
+  "unity": "2020.1",
+  "unityRelease": "0b5",
+  "keywords": [
+    "sliddes",
+    "mrsliddes",
+    "debug",
+    "bug",
+    "debugging",
+    "error"
+  ],
+  "author": {
+    "name": "SLIDDES",
+    "email": "support@sliddes.com",
+    "url": "https://www.sliddes.com"
+  },
+  "type": "library"
+}
