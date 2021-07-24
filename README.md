@@ -23,7 +23,17 @@ Note: There can only be 1 DebugConsole per scene, the DebugConsole handles this 
 DebugConsole is already active in the scene. You can add a DebugConsole for every scene if you like or just 1 in your
 build index 0 scene (your start scene) since the DebugConsole is in DontDestroyOnLoad.
 
+![Img DebugConsole 0](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/Github-Info/SLIDDES_Unity_Debug_Img_0.jpg)
+How the console first looks when you open it.
 
+![Img DebugConsole 1](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/Github-Info/SLIDDES_Unity_Debug_Img_1.jpg)
+Typing in a command complete with autocomplete.
+
+![Img DebugConsole 2](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/Github-Info/SLIDDES_Unity_Debug_Img_2.jpg)
+Expanded console view with a list of availabe commands
+
+## Controls list
+- [` / ~ / F6] Toggle DebugConsole
 
 ## Other
 For more information or contact, go to https://sliddes.com/
