@@ -74,6 +74,7 @@ public class MyCustomCommand1 : CustomCommand
 ```
 3. When starting playmode the console should say that it loaded 1 custom command(s)
 4. Type 'my_custom_command' to see the command in action (printing "Executed my_custom_command")
+![Img DebugConsole 3](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/Github-Info/SLIDDES_Unity_Debug_Img_3.jpg)
 
 ## Other
 For more information or contact, go to https://sliddes.com/
