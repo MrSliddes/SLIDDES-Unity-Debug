@@ -38,5 +38,35 @@ Expanded console view with a list of availabe commands
 - [Arrow Up] If no input in console set console input to last submitted command
 - [Arrow Up / Arrow Down] Select through suggested commands when available
 
+## Adding custom commands
+For a full explanation on creating a custom command class, navigate to Packages > SLIDDES Debug > Samples > [SampleCustomCommand.cs]: https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/main/Samples/SampleCustomCommand.cs (Dont forget to untoggle package visalility if Packages folder where to be empty) or see it [here]: https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/main/Samples/SampleCustomCommand.cs.
+1. Create a .cs script anywhere in your /Asset/ folder named 'MyCustomCommand1'
+2. Add this code to 'MyCustomCommand1'
+```
+// How a CustomCommand class should look like:
+using SLIDDES.Debug
+
+public class MyCustomCommand1 : CustomCommand
+{
+  public static DebugCommand CUSTOM_COMMAND;
+  
+  public override void Invoke()
+  {
+    CUSTOM_COMMAND = new DebugCommand("my_custom_command", "The description of my_custom_command", "my_custom_command", () => 
+    {
+      // Your command excecution code goes here
+      UnityEngine.Debug.Log("Executed my_custom_command");
+    });
+    
+    commands = new List<object>()
+    {
+      CUSTOM_COMMAND
+    }
+  }
+}
+```
+3. When starting playmode the console should say that it loaded 1 custom command(s)
+4. Type 'my_custom_command' to see the command in action (printing "Executed my_custom_command")
+
 ## Other
 For more information or contact, go to https://sliddes.com/
