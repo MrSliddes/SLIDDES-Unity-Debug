@@ -43,7 +43,7 @@ Expanded console view with a list of availabe commands
 
 ## Adding custom commands
 For a full explanation on creating a custom command class, navigate to Packages > SLIDDES Debug > Samples > [SampleCustomCommand.cs](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/main/Samples/SampleCustomCommand.cs) (Dont forget to untoggle package visalility if Packages folder where to be empty) or see it [here](https://github.com/MrSliddes/SLIDDES-Unity-Debug/blob/main/Samples/SampleCustomCommand.cs).
-1. Create a .cs script anywhere in your /Asset/ folder named 'MyCustomCommand1'
+1. Create a .cs script anywhere in your /Assets/ folder named 'MyCustomCommand1'
 2. Add this code to 'MyCustomCommand1'
 ```
 // How a CustomCommand class should look like:
