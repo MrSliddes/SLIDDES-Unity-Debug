@@ -34,6 +34,9 @@ Expanded console view with a list of availabe commands
 
 ## Controls list
 - [` / ~ / F6] Toggle DebugConsole
+- [TAB] Autocomplete suggested text in yellow
+- [Arrow Up] If no input in console set console input to last submitted command
+- [Arrow Up / Arrow Down] Select through suggested commands when available
 
 ## Other
 For more information or contact, go to https://sliddes.com/
