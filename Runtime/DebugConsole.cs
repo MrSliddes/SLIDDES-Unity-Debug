@@ -58,6 +58,10 @@ namespace SLIDDES.Debug
         /// </summary>
         [HideInInspector] public bool showAutoComplete;
         /// <summary>
+        /// The detection mode of autocomplete, 0 = strickt, 1 = contains char
+        /// </summary>
+        [HideInInspector] public int autoCompleteMode;
+        /// <summary>
         /// The max amount of log messages the console can keep track of before deleting old ones
         /// </summary>
         [HideInInspector] public int logMessagesMaxAmount;
@@ -299,7 +303,7 @@ namespace SLIDDES.Debug
             if(string.IsNullOrEmpty(input))
             {
                 Color c = GUI.color; GUI.color = Color.gray;
-                GUI.Label(new Rect(4, y, Screen.width - 4, 24), "> Type \"help\" for more information about the debug console");
+                GUI.Label(new Rect(4, y, Screen.width - 4, 24), "> Type \"help\" for more information about the debug console, ` / ~ / F6 to close debug console");
                 GUI.color = c;
             }
             else
@@ -319,9 +323,21 @@ namespace SLIDDES.Debug
                         for(int i = 0; i < commands.Count; i++)
                         {
                             DebugCommandBase commandBase = commands[i] as DebugCommandBase;
-                            if(input.ToLower() == commandBase.ID.Substring(0, Mathf.Clamp(input.Length, 0, commandBase.ID.Length)).ToLower())
+                            // How to do autocomplete search
+                            switch(autoCompleteMode)
                             {
-                                autoCompleteList.Add(commandBase.Format + " : " + commandBase.Description);
+                                case 1:
+                                    if(commandBase.ID.ToLower().Contains(input.ToLower()))
+                                    {
+                                        autoCompleteList.Add(commandBase.Format + " : " + commandBase.Description);
+                                    }
+                                    break;
+                                default:
+                                    if(input.ToLower() == commandBase.ID.Substring(0, Mathf.Clamp(input.Length, 0, commandBase.ID.Length)).ToLower())
+                                    {
+                                        autoCompleteList.Add(commandBase.Format + " : " + commandBase.Description);
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -465,6 +481,17 @@ namespace SLIDDES.Debug
             }
 
             OnGUIConsoleExtend?.Invoke();
+        }
+
+        /// <summary>
+        /// Clear the DebugConsole logMessages string
+        /// </summary>
+        public static void ClearLog()
+        {
+            Instance.logMessages = "";
+            Instance.logMessagesAmount = 0;
+            Instance.logMessagesHeight = 6;
+            Instance.logMessageScroll.y = 0;
         }
 
         /// <summary>

@@ -14,65 +14,101 @@ namespace SLIDDES.Debug
     {
         public static DebugCommand<float> AUDIOLISTENER_VOLUME;
         public static DebugCommand BUILD_VERSION;
+        public static DebugCommand<float> CAMERA_FOV;
         public static DebugCommand COMMANDS;
+        public static DebugCommand DEBUGCONSOLE_AUTOCOMPLETE;
+        public static DebugCommand<int> DEBUGCONSOLE_AUTOCOMPLETEMODE;
         public static DebugCommand<int> DEBUGCONSOLE_LOGMESSAGESMAXAMOUNT;
         public static DebugCommand<string> DEBUG_LOG;
+        public static DebugCommand DEBUG_LOG_LINK;
         public static DebugCommand DEBUG_LOG_TEST;
         public static DebugCommand<object> DESTROY;
-        public static DebugCommand<bool> DRAW_FPS;
+        public static DebugCommand FPS_DRAW;
+        public static DebugCommand<int> FPS_LIMIT;
+        public static DebugCommand<int> FPS_VSYNCCOUNT;
         public static DebugCommand HELP;
-        public static DebugCommand<int> LOAD_SCENE;
+        public static DebugCommand<int> SCENE_LOAD;
+        public static DebugCommand LOG_MESSAGES_CLEAR;
+        public static DebugCommand LOG_MESSAGES_DRAW;
         public static DebugCommand<int> LOG_MESSAGES_VIEWPORT;
         public static DebugCommand<Vector3> MOVE_CAMERA;
         public static DebugCommand<Vector3> MOVE_PLAYER;
-        public static DebugCommand RESTART_SCENE;
+        public static DebugCommand<bool> QUIT;
+        public static DebugCommand SCENE_RESTART;
         public static DebugCommand<Tuple<string, string, string>> SCREEN_SETRESOLUTION;
-        public static DebugCommand<bool> SHOW_AUTOCOMPLETE;
-        public static DebugCommand<bool> SHOW_LOG_MESSAGES;
-        public static DebugCommand<bool> SHOW_UNTIY_LOG;
+        public static DebugCommand SYSTEM_INFO;
         public static DebugCommand<float> TIME_TIMESCALE;
+        public static DebugCommand UI_DRAW;
 
         public List<object> commands;
 
         private DebugConsole console;
 
+        private bool toggleDEBUGCONSOLE_AUTOCOMPLETE;
+        private bool toggleDEBUG_LOG_LINK;
+        private bool toggleFPS_DRAW;
+        private bool toggleLOG_MESSAGES_DRAW = true;
+        private bool toggleUI_DRAW = true;
+
         public void Invoke()
         {
             this.console = DebugConsole.Instance;
             InvokeCommands();
+            // If you do not want default commands in your application you can uncomment them here
             commands = new List<object>
             {
                 AUDIOLISTENER_VOLUME,
                 BUILD_VERSION,
+                CAMERA_FOV,
                 COMMANDS,
+                DEBUGCONSOLE_AUTOCOMPLETE,
+                DEBUGCONSOLE_AUTOCOMPLETEMODE,
                 DEBUGCONSOLE_LOGMESSAGESMAXAMOUNT,
                 DEBUG_LOG,
                 DEBUG_LOG_TEST,
                 DESTROY,
-                DRAW_FPS,
+                FPS_DRAW,
+                FPS_LIMIT,
+                FPS_VSYNCCOUNT,
                 HELP,
-                LOAD_SCENE,
+                SCENE_LOAD,
+                LOG_MESSAGES_CLEAR,
+                LOG_MESSAGES_DRAW,
                 LOG_MESSAGES_VIEWPORT,
                 MOVE_CAMERA,
                 MOVE_PLAYER,
-                RESTART_SCENE,
+                QUIT,
+                SCENE_RESTART,
                 SCREEN_SETRESOLUTION,
-                SHOW_AUTOCOMPLETE,
-                SHOW_LOG_MESSAGES,
-                SHOW_UNTIY_LOG,
-                TIME_TIMESCALE
+                DEBUG_LOG_LINK,
+                SYSTEM_INFO,
+                TIME_TIMESCALE,
+                UI_DRAW
             };
         }
 
         private void InvokeCommands()
         {
-            AUDIOLISTENER_VOLUME = new DebugCommand<float>("AudioListener.volume", "Set AudioListener.volume, which controls the game sound volume (0.0 to 1.0) (non logarithmic)", "AudioListener.volume <float>", (x) =>
+            AUDIOLISTENER_VOLUME = new DebugCommand<float>("AudioListener.volume", "Set AudioListener.volume, which controls the application sound volume (0.0 to 1.0) (non logarithmic)", "AudioListener.volume <float>", (x) =>
             {
                 x = Mathf.Clamp(x, 0.0f, 1f);
                 AudioListener.volume = x;
                 DebugConsole.Log("[Debug Console] Set AudioListener.volume to " + x);
             });
             BUILD_VERSION = new DebugCommand("build_version", "Log the application current build version", "build_version", () => { DebugConsole.Log("[Debug Console] Build version: " + Application.version); });
+            CAMERA_FOV = new DebugCommand<float>("camera_fov", "Set main camera field of view (0.001 to 179)", "camera_fov <float>", (x) =>
+            {
+                x = Mathf.Clamp(x, 0.001f, 179);
+                if(Camera.main == null)
+                {
+                    DebugConsole.Log("[Debug Console] Error: no camera with tag MainCamera found");
+                }
+                else
+                {
+                    Camera.main.fieldOfView = x;
+                    DebugConsole.Log("[Debug Console] Set Camera.main.fieldOfView to " + x);
+                }
+            });
             COMMANDS = new DebugCommand("commands", "Shows a list of all commands", "commands", () =>
             {
                 DebugConsole.Log("<color=orange>[Commands]</color>");
@@ -81,6 +117,18 @@ namespace SLIDDES.Debug
                     DebugCommandBase commandBase = console.commands[i] as DebugCommandBase;
                     DebugConsole.Log(commandBase.ID + " : " + commandBase.Description);
                 }
+            });
+            DEBUGCONSOLE_AUTOCOMPLETE = new DebugCommand("debugconsole_autocomplete", "Toggle the DebugConsole auto complete GUI for commands", "debugconsole_autocomplete", () =>
+            {
+                toggleDEBUGCONSOLE_AUTOCOMPLETE = !toggleDEBUGCONSOLE_AUTOCOMPLETE;
+                console.showAutoComplete = toggleDEBUGCONSOLE_AUTOCOMPLETE;
+                DebugConsole.Log("[Debug Console] Set DebugConsole.showAutoComplete to " + toggleDEBUGCONSOLE_AUTOCOMPLETE);
+            });
+            DEBUGCONSOLE_AUTOCOMPLETEMODE = new DebugCommand<int>("debugconsole_autocompletemode", "Change the way autocomplete suggests (0 = default/strickt, 1 = contains/loose)", "debugconsole_autocompletemode <int>", (x) =>
+            {
+                x = Mathf.Clamp(x, 0, 1);
+                console.autoCompleteMode = x;
+                DebugConsole.Log("[Debug Console] Set DebugConsole.autoCompleteMode to " + x);
             });
             DEBUGCONSOLE_LOGMESSAGESMAXAMOUNT = new DebugCommand<int>("DebugConsole.logMessagesMaxAmount", "The max amount of log messages (lines) the console can have before deleting old ones", "DebugConsole.logMessagesMaxAmount <int>", (x) =>
             {
@@ -92,6 +140,19 @@ namespace SLIDDES.Debug
             {
                 DebugConsole.Log("[Debug.Log] " + x);
                 UnityEngine.Debug.Log("[Debug Console] " + x);
+            });
+            DEBUG_LOG_LINK = new DebugCommand("debug_log_link", "Toggle linking the UnityEngine.Debug.Log to the DebugConsole", "debug_log_link", () =>
+            {
+                toggleDEBUG_LOG_LINK = !toggleDEBUG_LOG_LINK;
+                if(toggleDEBUG_LOG_LINK)
+                {
+                    console.OnDisableExtend += () => Application.logMessageReceived -= ShowUnityLogInConsole;
+                    Application.logMessageReceived += ShowUnityLogInConsole;
+                }
+                else
+                {
+                    Application.logMessageReceived -= ShowUnityLogInConsole;
+                }
             });
             DEBUG_LOG_TEST = new DebugCommand("debug_log_test", "Prints a debug log test message in UnityEngine.Debug.Log", "debug_log_test", () => { UnityEngine.Debug.Log("[Debug Console] Test msg trough debug console " + System.DateTime.Now.ToString()); });
             DESTROY = new DebugCommand<object>("destroy", "Destroy a GameObject by name/tag", "destroy (name:||tag:)<string>", (x) =>
@@ -162,9 +223,10 @@ namespace SLIDDES.Debug
                     DebugConsole.Log("[Debug Console] Error: argument needs to be passed as a string or Component");
                 }
             });
-            DRAW_FPS = new DebugCommand<bool>("draw_fps", "Draw the game fps in the top left corner", "draw_fps <bool>", (x) => 
+            FPS_DRAW = new DebugCommand("fps_draw", "Toggle drawing the application fps in the top left corner", "fps_draw <bool>", () => 
             {
-                if(x)
+                toggleFPS_DRAW = !toggleFPS_DRAW;
+                if(toggleFPS_DRAW)
                 {
                     console.OnDisableExtend += console.OnGUIExtend - OnGUIDrawFPS;
                     console.OnGUIExtend += OnGUIDrawFPS;
@@ -174,24 +236,33 @@ namespace SLIDDES.Debug
                     console.OnGUIExtend -= OnGUIDrawFPS;
                 }
             });
+            FPS_LIMIT = new DebugCommand<int>("fps_limit", "Set Application.targetFrameRate (-1 to 999999)", "fps_limit <int>", (x) =>
+            {
+                x = Mathf.Clamp(x, -1, 999999);
+                if(x == 0) x = -1;
+                Application.targetFrameRate = x;
+                DebugConsole.Log("[Debug Console] Set Application.targetFrameRate to " + x);
+            });
+            FPS_VSYNCCOUNT = new DebugCommand<int>("fps_vsynccount", "Set QualitySettings.vSyncCount (0 to 4). If value > 0 then fps_limit will be ignored.", "fps_vsynccount <int>", (x) =>
+            {
+                x = Mathf.Clamp(x, 0, 4);
+                QualitySettings.vSyncCount = x;
+                DebugConsole.Log("[Debug Console] Set QualitySettings.vSyncCount to " + x);
+            });
             HELP = new DebugCommand("help", "Shows commands to help interacting with this debug console", "help", () =>
             {
                 DebugConsole.Log("<color=orange>[Help]</color>");
                 DebugConsole.Log("commands : shows a list of all commands");
                 DebugConsole.Log("Debug Console created by SLIDDES");
             });
-            LOAD_SCENE = new DebugCommand<int>("load_scene", "Load a scene by its build index", "load_scene <build_index>", (x) =>
+            LOG_MESSAGES_CLEAR = new DebugCommand("log_messages_clear", "Clear all log messages of DebugConsole", "log_messages_clear", () =>
             {
-                DebugConsole.Log("[Debug Console] Load build index scene " + x);
-                // Check if scene build index exists
-                if(x < 0 || x > SceneManager.sceneCountInBuildSettings - 1)
-                {
-                    DebugConsole.Log("[Debug Console] Error: no scene found with build index " + x);
-                }
-                else
-                {
-                    SceneManager.LoadScene(x);
-                }
+                DebugConsole.ClearLog();
+            });
+            LOG_MESSAGES_DRAW = new DebugCommand("log_messages_draw", "Toggle drawing the DebugConsole.Log messages", "log_messages_draw", () =>
+            {
+                toggleLOG_MESSAGES_DRAW = !toggleLOG_MESSAGES_DRAW;
+                console.showLogMessages = toggleLOG_MESSAGES_DRAW;
             });
             LOG_MESSAGES_VIEWPORT = new DebugCommand<int>("log_messages_viewport", "Change the viewport size of the DebugConsole log messages", "log_messages_viewport (0 to 2)<int>", (x) =>
             {
@@ -226,7 +297,32 @@ namespace SLIDDES.Debug
                 a.transform.position = x;
                 DebugConsole.Log("[Debug Console] Moved player position to " + x);
             });
-            RESTART_SCENE = new DebugCommand("restart_scene", "Restart the current active scene", "restart_scene", () =>
+            QUIT = new DebugCommand<bool>("quit", "Quit the application", "quit <bool>", (x) =>
+            {
+                if(x)
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.ExitPlaymode();
+#else
+                    Application.Quit();
+#endif
+                }
+                else DebugConsole.Log("[Debug Console] Then why did you type this command?");
+            });
+            SCENE_LOAD = new DebugCommand<int>("scene_load", "Load a scene by its build index", "scene_load <build_index>", (x) =>
+            {
+                DebugConsole.Log("[Debug Console] Load build index scene " + x);
+                // Check if scene build index exists
+                if(x < 0 || x > SceneManager.sceneCountInBuildSettings - 1)
+                {
+                    DebugConsole.Log("[Debug Console] Error: no scene found with build index " + x);
+                }
+                else
+                {
+                    SceneManager.LoadScene(x);
+                }
+            });
+            SCENE_RESTART = new DebugCommand("scene_restart", "Restart the current active scene", "scene_restart", () =>
             {
                 DebugConsole.Log("[Debug Console] Restart current scene with build index " + SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -246,32 +342,33 @@ namespace SLIDDES.Debug
                     DebugConsole.Log("[Debug Console] Error: argument(s) not passed in correctly, got " + x.Item1.ToString() + " " + x.Item2.ToString() + " " + x.Item3.ToString());
                 }
             });
-            SHOW_AUTOCOMPLETE = new DebugCommand<bool>("show_autocomplete", "Show the DebugConsole auto complete GUI for commands", "show_autocomplete <bool>", (x) =>
+            SYSTEM_INFO = new DebugCommand("system_info", "Show info about the system", "system_info", () =>
             {
-                console.showAutoComplete = x;
-                DebugConsole.Log("[Debug Console] Set DebugConsole.showAutoComplete to " + x);
-            });
-            SHOW_LOG_MESSAGES = new DebugCommand<bool>("show_log_messages", "Show the DebugConsole.Log messages", "show_log_messages <bool>", (x) =>
-            {
-                console.showLogMessages = x;
-            });
-            SHOW_UNTIY_LOG = new DebugCommand<bool>("show_unity_log", "Shows the UnityEngine.Debug.Log in the DebugConsole", "show_unity_log <bool>", (x) =>
-            {
-                if(x)
-                {
-                    console.OnDisableExtend += () => Application.logMessageReceived -= ShowUnityLogInConsole;
-                    Application.logMessageReceived += ShowUnityLogInConsole;
-                }
-                else
-                {
-                    Application.logMessageReceived -= ShowUnityLogInConsole;
-                }
+                DebugConsole.Log("<color=orange>[System Info]</color>");
+                DebugConsole.Log("[Debug Console] Screen size: " + Screen.width + "x" + Screen.height);
+                DebugConsole.Log("[Debug Console] Fullscreen: " + Screen.fullScreen);
+                DebugConsole.Log("[Debug Console] Fullscreen Mode: " + Screen.fullScreenMode);
+                DebugConsole.Log("[Debug Console] Operating System: " + SystemInfo.operatingSystem);
+                DebugConsole.Log("[Debug Console] Processor: " + SystemInfo.processorType);
+                DebugConsole.Log("[Debug Console] Graphics Card: " + SystemInfo.graphicsDeviceName);
+                DebugConsole.Log("[Debug Console] Memory Present: " + SystemInfo.systemMemorySize);
+                DebugConsole.Log("[Debug Console] Audio Device Availabe: " + SystemInfo.supportsAudio);
             });
             TIME_TIMESCALE = new DebugCommand<float>("Time.timeScale", "Set the scale at which time passes", "Time.timeScale <float>", (x) =>
             {
                 x = Mathf.Clamp(x, 0, 100);
                 Time.timeScale = x;
                 DebugConsole.Log("[Debug Console] Set Time.timeScale to " + x);
+            });
+            UI_DRAW = new DebugCommand("ui_draw", "Toggle drawing UI elements", "ui_draw", () =>
+            {
+                toggleUI_DRAW = !toggleUI_DRAW;
+                Canvas[] canvases = GameObject.FindObjectsOfType<Canvas>();
+                foreach(Canvas item in canvases)
+                {
+                    item.enabled = toggleUI_DRAW;
+                }
+                DebugConsole.Log("[Debug Console] Set draw UI to " + toggleUI_DRAW);
             });
         }
 
