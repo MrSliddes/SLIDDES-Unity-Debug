@@ -47,25 +47,29 @@ For a full explanation on creating a custom command class, navigate to Packages 
 2. Add this code to 'MyCustomCommand1'
 ```
 // How a CustomCommand class should look like:
-using SLIDDES.Debug
+// How a CustomCommand class should look like:
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using SLIDDES.Debug;
 
 public class MyCustomCommand1 : CustomCommand
 {
-  public static DebugCommand CUSTOM_COMMAND;
-  
-  public override void Invoke()
-  {
-    CUSTOM_COMMAND = new DebugCommand("my_custom_command", "The description of my_custom_command", "my_custom_command", () => 
+    public static DebugCommand CUSTOM_COMMAND;
+
+    public override void Invoke()
     {
-      // Your command excecution code goes here
-      UnityEngine.Debug.Log("Executed my_custom_command");
-    });
-    
-    commands = new List<object>()
-    {
-      CUSTOM_COMMAND
+        CUSTOM_COMMAND = new DebugCommand("my_custom_command", "The description of my_custom_command", "my_custom_command", () =>
+        {
+            // Your command excecution code goes here
+            UnityEngine.Debug.Log("Executed my_custom_command");
+        });
+
+        commands = new List<object>()
+        {
+          CUSTOM_COMMAND
+        };
     }
-  }
 }
 ```
 3. When starting playmode the console should say that it loaded 1 custom command(s)
