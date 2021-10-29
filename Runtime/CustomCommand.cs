@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SLIDDES.Debug
+namespace SLIDDES.Debugging
 {
     /// <summary>
     /// Base class for custom commands

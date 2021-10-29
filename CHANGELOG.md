@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.1.1] - 2021-10-29
+### Changed
+- Renamed SLIDDES.Debug to SLIDDES.Debugging to avoid Unity namespace error UnityEngine.Debug
+
 ## [1.1.0] - 2021-07-24
 ### Added
 - How to close text to console bar

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SLIDDES.Debug; // 1. Important to add SLIDDES.Debug to make use of the debug classes
+using SLIDDES.Debugging; // 1. Important to add SLIDDES.Debugging to make use of the debug classes
 
-namespace SLIDDES.Debug // 1.1 or use SLIDDES.Debug namespace for access to CustomCommand
+namespace SLIDDES.Debugging // 1.1 or use SLIDDES.Debugging namespace for access to CustomCommand
 {
     /// <summary>
     /// 2. Example class of how to write custom commands

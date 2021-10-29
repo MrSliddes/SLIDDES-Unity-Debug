@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace SLIDDES.Debug
+namespace SLIDDES.Debugging
 {
     /// <summary>
     /// Class containing build in commands

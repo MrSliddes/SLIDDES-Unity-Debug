@@ -1,7 +1,7 @@
 {
-  "name": "com.sliddes.debug",
-  "version": "1.1.0",
-  "displayName": "SLIDDES Debug",
+  "name": "com.sliddes.debugging",
+  "version": "1.1.1",
+  "displayName": "SLIDDES Debugging",
   "description": "SLIDDES debugging for Unity\nContains:\nDebug Console - for debugging in build / editor",
   "keywords": [
     "sliddes",

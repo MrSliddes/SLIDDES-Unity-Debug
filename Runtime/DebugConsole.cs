@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace SLIDDES.Debug
+namespace SLIDDES.Debugging
 {
     /// <summary>
     /// Base script for displaying the debug console in game
