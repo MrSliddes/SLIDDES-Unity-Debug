@@ -200,11 +200,9 @@ namespace SLIDDES.Debugging
                 cc.Invoke();
 
                 // Loop trough the CustomCommand.commands list and add it to DebugConsole.commands
-                DebugCommand command = null;
                 for(int j = 0; j < cc.commands.Count; j++)
                 {
-                    command = cc.commands[j] as DebugCommand;
-                    commands.Add(command);
+                    commands.Add(cc.commands[j]);
                     customCommandsAdded++;
                 }
             }
