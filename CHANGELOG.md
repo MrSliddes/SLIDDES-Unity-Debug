@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.2.0] - 2021-11-13
+### Added
+- Executed command now shows up in DebugConsole.Log
+- Commands Build In folder
+- Command log_files for editor/package manager/player (windows only)
+- Command screenshot for taking a screenshot
+
+### Changed
+- Sample folder intergration
+
+### Fixed
+- License warning of not having a meta file
+
 ## [1.1.1] - 2021-10-29
 ### Changed
 - Renamed SLIDDES.Debug to SLIDDES.Debugging to avoid Unity namespace error UnityEngine.Debug

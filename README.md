@@ -47,11 +47,10 @@ For a full explanation on creating a custom command class, navigate to Packages 
 2. Add this code to 'MyCustomCommand1'
 ```
 // How a CustomCommand class should look like:
-// How a CustomCommand class should look like:
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SLIDDES.Debug;
+using SLIDDES.Debugging;
 
 public class MyCustomCommand1 : CustomCommand
 {

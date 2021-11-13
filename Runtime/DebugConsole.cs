@@ -523,7 +523,7 @@ namespace SLIDDES.Debugging
             }
 
             // Add message
-            Instance.logMessages += "> " + s + "\n";            
+            Instance.logMessages += "> " + s + "\n";
         }
 
         /// <summary>
@@ -553,7 +553,9 @@ namespace SLIDDES.Debugging
         private void HandleInput()
         {
             if(string.IsNullOrEmpty(input)) return;
-            
+
+            Log(input);
+
             Instance.previousCommand = input;
             string[] properties = input.Split(' ');
 
