@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace SLIDDES.Debugging
+namespace SLIDDES.Debug
 {
     /// <summary>
     /// Class containing build in commands
@@ -39,6 +39,8 @@ namespace SLIDDES.Debugging
         public static DebugCommand SYSTEM_INFO;
         public static DebugCommand<float> TIME_TIMESCALE;
         public static DebugCommand UI_DRAW;
+        public static DebugCommand PROFILER;
+        public static DebugCommand CLOSE;
 
         public List<object> commands;
 
@@ -83,7 +85,9 @@ namespace SLIDDES.Debugging
                 DEBUG_LOG_LINK,
                 SYSTEM_INFO,
                 TIME_TIMESCALE,
-                UI_DRAW
+                UI_DRAW,
+                PROFILER,
+                CLOSE
             };
         }
 
@@ -369,6 +373,24 @@ namespace SLIDDES.Debugging
                     item.enabled = toggleUI_DRAW;
                 }
                 DebugConsole.Log("[Debug Console] Set draw UI to " + toggleUI_DRAW);
+            });
+            PROFILER = new DebugCommand("profiler", "Toggle the profiler for stats", "profiler", () =>
+            {
+                ProfilerManager profilerManager = GameObject.FindObjectOfType<ProfilerManager>();
+                if(profilerManager != null)
+                {
+                    // Destroy
+                    GameObject.Destroy(profilerManager.gameObject);
+                }
+                else
+                {
+                    GameObject a = new GameObject("[ProfilerManager]");
+                    a.AddComponent<ProfilerManager>();
+                }
+            });
+            CLOSE = new DebugCommand("close", "Close the Debug Console", "close", () => 
+            {
+                DebugConsole.ToggleShow();
             });
         }
 

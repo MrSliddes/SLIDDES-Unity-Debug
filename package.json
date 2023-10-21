@@ -1,34 +1,27 @@
 {
   "name": "com.sliddes.debugging",
-  "version": "1.2.0",
-  "displayName": "SLIDDES Debugging",
+  "version": "1.3.0",
+  "displayName": "SLIDDES Debug",
   "description": "SLIDDES debugging for Unity\nContains:\nDebug Console - for debugging in build / editor",
-  "keywords": 
-    [
+  "keywords": [
     "sliddes",
     "mrsliddes",
     "debug",
     "bug",
     "debugging",
     "error"
-    ],
-  "author": 
-    {
+  ],
+  "author": {
     "name": "SLIDDES",
     "email": "support@sliddes.com",
     "url": "https://www.sliddes.com"
-    },
+  },
   "type": "library",
-    "samples": 
-    [
+  "samples": [
     {
-
-     "displayName": "Sample Custom Command",
-
-     "description": "A sample script of a custom command",
-
-     "path": "Samples~/Samples Custom Commands"
+      "displayName": "Sample Custom Command",
+      "description": "A sample script of a custom command",
+      "path": "Samples~/Samples Custom Commands"
     }
-    ]
-
+  ]
 }

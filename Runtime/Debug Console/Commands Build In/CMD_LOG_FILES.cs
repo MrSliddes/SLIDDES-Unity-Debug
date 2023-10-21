@@ -4,7 +4,7 @@ using System.Diagnostics;
 using UnityEngine;
 using System;
 
-namespace SLIDDES.Debugging // 1.1 or use SLIDDES.Debugging namespace for access to CustomCommand
+namespace SLIDDES.Debug // 1.1 or use SLIDDES.Debug namespace for access to CustomCommand
 {
     /// <summary>
     /// For accesing log files during editor/runtime

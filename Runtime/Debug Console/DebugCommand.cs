@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SLIDDES.Debugging
+namespace SLIDDES.Debug
 {
     /// <summary>
     /// Base class for DebugCommand

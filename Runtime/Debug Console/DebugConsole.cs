@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
-namespace SLIDDES.Debugging
+namespace SLIDDES.Debug
 {
     /// <summary>
     /// Base script for displaying the debug console in game
@@ -24,6 +25,8 @@ namespace SLIDDES.Debugging
                 return instance;
             }
         }
+
+        public InputAction inputToggleConsole;
 
         /// <summary>
         /// Contains the list of commands (DebugCommand)
@@ -226,6 +229,12 @@ namespace SLIDDES.Debugging
             textureGray08 = new Texture2D(1, 1);
             textureGray08.SetPixel(0, 0, new Color(0, 0, 0, 0.8f));
             textureGray08.Apply();
+
+            inputToggleConsole.performed += x =>
+            {
+                ToggleShow();
+            };
+            inputToggleConsole.Enable();
         }
 
         private void OnEnable()
@@ -238,11 +247,13 @@ namespace SLIDDES.Debugging
             OnDisableExtend?.Invoke();
         }
 
+#if ENABLE_LEGACY_INPUT_MANAGER
         private void Update()
         {
             // Toggling debug console
             if(Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.Tilde) || Input.GetKeyDown(KeyCode.BackQuote)) ToggleShow();
         }
+#endif
 
         private void OnGUI()
         {

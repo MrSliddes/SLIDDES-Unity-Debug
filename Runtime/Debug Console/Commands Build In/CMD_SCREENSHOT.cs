@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-namespace SLIDDES.Debugging
+namespace SLIDDES.Debug
 {
     /// <summary>
     /// For taking a screenshot
